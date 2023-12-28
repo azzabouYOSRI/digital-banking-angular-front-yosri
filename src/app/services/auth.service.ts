@@ -46,24 +46,24 @@ private accessTokenPromise: Promise<void> = Promise.resolve();
         window.localStorage.setItem("jwt-token",this.accessToken)
   }
 
-  getAccessToken(): Promise<string> {
-    if (!this.accessTokenPromise) {
-      this.accessTokenPromise = new Promise<void>((resolve) => {
-        this.loadProfileCallback = () => {
-          resolve();
-        };
-      });
-    }
+  // getAccessToken(): Promise<string> {
+  //   if (!this.accessTokenPromise) {
+  //     this.accessTokenPromise = new Promise<void>((resolve) => {
+  //       this.loadProfileCallback = () => {
+  //         resolve();
+  //       };
+  //     });
+  //   }
+  //
+  //   return this.accessTokenPromise.then(() => this.accessToken);
+  // }
 
-    return this.accessTokenPromise.then(() => this.accessToken);
-  }
-
-  private loadProfileCallback: () => void = () => {};
-
-  private triggerLoadProfileCallback() {
-    this.loadProfileCallback();
-    this.loadProfileCallback = () => {};
-  }
+  // private loadProfileCallback: () => void = () => {};
+  //
+  // private triggerLoadProfileCallback() {
+  //   this.loadProfileCallback();
+  //   this.loadProfileCallback = () => {};
+  // }
 
   logout() {
     this.isAuthenticated=false;

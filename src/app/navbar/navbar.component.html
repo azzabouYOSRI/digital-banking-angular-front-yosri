@@ -19,6 +19,7 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" routerLink="/admin/customers">Search customers</a></li>
             <li *ngIf="authService.roles.includes('ADMIN')"><a class="dropdown-item" routerLink="/admin/new-customer">New customer</a></li>
+            <li *ngIf="authService.roles.includes('ADMIN')"><a class="dropdown-item" routerLink="/admin/new-user">New user</a></li>
           </ul>
         </li>
         <li class="nav-item">

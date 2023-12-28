@@ -10,6 +10,13 @@ import {environment} from "../../environments/environment";
 export class CustomerService {
   constructor(private http:HttpClient) { }
 
+  sanitizeInput(input: string): string {
+    // Remove characters that may be used in SQL injection
+    const sanitizedInput = input.replace(/[\;\+\-\*\/\=\>\<\'\"]/g, '');
+
+    return sanitizedInput;
+  }
+
   public getCustomers():Observable<Array<Customer>>{
     return this.http.get<Array<Customer>>(environment.backendHost+"/customers")
   }

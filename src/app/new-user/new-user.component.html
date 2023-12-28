@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="card col-md-6 offset-3 mt-2">
+    <div class="card-header">New Customer</div>
+    <div class="card-body">
+      <form [formGroup]="newUserFormGroup" (ngSubmit)="handleSaveUser()">
+        <div class="mb-3">
+          <label class="form-label">Name:</label>
+          <input type="text" formControlName="name" class="form-control">
+          <span class="text-danger"
+                *ngIf="newUserFormGroup.controls['name'].touched
+                && newUserFormGroup.controls['name'].errors
+                && newUserFormGroup.controls['name'].errors!['required']">
+            Name is Required
+          </span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email:</label>
+          <input type="text" formControlName="username" class="form-control">
+          <span class="text-danger"
+                *ngIf="newUserFormGroup.controls['username'].touched
+                && newUserFormGroup.controls['username'].errors
+                && newUserFormGroup.controls['username'].errors!['username']">
+            Email is not valid
+          </span>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" id="password" formControlName="password" class="form-control">
+          <div *ngIf="newUserFormGroup.controls['password'].hasError('required') && newUserFormGroup.controls['password'].touched" class="text-danger">
+            Password is Required
+          </div>
+          <div *ngIf="newUserFormGroup.controls['password'].hasError('minlength') && newUserFormGroup.controls['password'].touched" class="text-danger">
+            Password should be at least 4 characters long
+          </div>
+          <div *ngIf="newUserFormGroup.controls['password'].hasError('passwordComplexity') && newUserFormGroup.controls['password'].touched" class="text-danger">
+            Password should contain at least one uppercase letter, one lowercase letter, and one number.
+          </div>
+        </div>
+        <button [disabled]="!newUserFormGroup.valid" class="btn btn-info">Save</button>
+      </form>
+    </div>
+  </div>
+</div>

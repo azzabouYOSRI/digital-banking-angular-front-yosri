@@ -25,7 +25,8 @@ export class CustomersComponent implements OnInit {
   }
   handleSearchCustomers() {
     let kw=this.searchFormGroup?.value.keyword;
-    this.customers=this.customerService.searchCustomers(kw).pipe(
+    let keyw =this.customerService.sanitizeInput(kw);
+    this.customers=this.customerService.searchCustomers(keyw).pipe(
       catchError(err => {
         this.errorMessage=err.message;
         return throwError(err);

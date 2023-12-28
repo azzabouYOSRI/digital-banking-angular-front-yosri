@@ -1,18 +1,22 @@
 <div class="p-3">
   <div class="card">
-    <div class="card-header"> Authentication</div>
+    <div class="card-header">Authentication</div>
     <div class="card-body">
       <form [formGroup]="formLogin" (ngSubmit)="handleLogin()">
         <div class="mb-3">
           <label class="form-label">Email address</label>
-            <input type="email" class="form-control" placeholder="Enter email" formControlName="username">
+          <input type="email" class="form-control" placeholder="Enter email" formControlName="username" />
+          <div *ngIf="formLogin.get('username')?.hasError('required')">Username is required.</div>
+          <div *ngIf="formLogin.get('username')?.hasError('email')">Please enter a valid email address.</div>
         </div>
         <div class="mb-3">
           <label class="form-label">Password</label>
-            <input type="password" class="form-control" placeholder="Password" formControlName="password">
+          <input type="password" class="form-control" placeholder="Password" formControlName="password" />
+          <div *ngIf="formLogin.get('password')?.hasError('required')">Password is required.</div>
+          <div *ngIf="formLogin.get('password')?.hasError('minlength')">Password must be at least 8 characters long.</div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-</div>
-</div>
+    </div>
+  </div>
 </div>

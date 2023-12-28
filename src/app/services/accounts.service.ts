@@ -11,6 +11,13 @@ export class AccountsService {
 
   constructor(private http : HttpClient) { }
 
+  sanitizeInput(input: string): string {
+    // Remove characters that may be used in SQL injection
+    const sanitizedInput = input.replace(/[\;\+\-\*\/\=\>\<\'\"]/g, '');
+
+    return sanitizedInput;
+  }
+
   public getAccount(accountId : string, page : number, size : number):Observable<AccountDetails>{
     return this.http.get<AccountDetails>(environment.backendHost+"/accounts/"+accountId+"/pageOperations?page="+page+"&size="+size);
   }

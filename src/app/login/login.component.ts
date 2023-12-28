@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
 import {jwtDecode} from "jwt-decode";
 import {Router} from "@angular/router";
@@ -25,28 +25,34 @@ username: any;
 
   ngOnInit(): void {
     this.formLogin=this.fb.group({
-      username : this.fb.control(''),
-      password : this.fb.control('')
+     username: this.fb.control('', [Validators.required, Validators.email]),
+    password: this.fb.control('', [Validators.required, Validators.minLength(8)])
     });
   }
 
   handleLogin() {
-  let username :string = this.formLogin.value.username;
-  let password :string = this.formLogin.value.password;
-  this.authService.login(username, password).subscribe({
-    next : (data)=>{
-      this.authService.loadProfile(data);
-      this.ngZone.run(async () => {
-        try {
-          await this.router.navigateByUrl("/admin");
-        } catch (error) {
-          console.error('Error during navigation:', error);
+    const username: string = this.formLogin.value.username;
+    const password: string = this.formLogin.value.password;
+
+    this.authService.login(username, password).subscribe({
+      next: (data) => {
+        this.authService.loadProfile(data);
+        this.ngZone.run(async () => {
+          try {
+            await this.router.navigateByUrl('/admin');
+          } catch (error) {
+            console.error('Error during navigation:', error);
+          }
+        });
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          alert('Invalid username or password');
+        } else {
+          alert('Error during login');
         }
-      });    },
-    error : (err)=>{
-      alert("Error Login");
-      console.log(err);
-    }
-  })
+        console.error(err);
+      }
+    });
   }
 }
